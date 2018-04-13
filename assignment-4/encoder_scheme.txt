@@ -1,0 +1,16 @@
+Encoder scheme: static ROT-N + dynamic XOR
+------------------------------------------
+
+Add 1 byte to the shellcode, the number of the rotation to be made.
+
+1st Byte.
+  - Store the number of the rotation as the 1st byte of the encoded shellcode.
+  - To the 1rst byte of the shellcode, apply the rot-n operation.
+  - Xor this last value, with the previous byte of the encoded shellcode,
+    in this case, the value of the rot-n selected.
+  - Add the new value as part of the encoded shellcode.
+
+2nd..Nth Bytes
+  - Rot-n the value of the actual byte of the shellcode.
+  - Xor the value obtained with the value of the previous byte of the encoded shellcode.
+  - Add the new value as part of the encoded shellcode.
